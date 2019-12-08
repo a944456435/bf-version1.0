@@ -1,18 +1,50 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <div id="home">
+        <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        </el-breadcrumb> -->
+        <el-menu :default-active="activeIndex" 
+        class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1">处理中心</el-menu-item>
+            <el-submenu index="2">
+                <template slot="title">我的工作台</template>
+                <el-menu-item index="2-1">选项1</el-menu-item>
+                <el-menu-item index="2-2">选项2</el-menu-item>
+                <el-menu-item index="2-3">选项3</el-menu-item>
+                <el-submenu index="2-4">
+                <template slot="title">选项4</template>
+                <el-menu-item index="2-4-1">选项1</el-menu-item>
+                <el-menu-item index="2-4-2">选项2</el-menu-item>
+                <el-menu-item index="2-4-3">选项3</el-menu-item>
+                </el-submenu>
+            </el-submenu>
+            <el-menu-item index="3" disabled>消息中心</el-menu-item>
+            <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+        </el-menu>
+
+            首页大屏
+        
+    </div>
 </template>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
-  name: "home",
-  components: {
-    HelloWorld
-  }
-};
+    data(){
+        return {
+            activeIndex:"1"
+        }
+    },
+    methods:{
+        handleSelect(key, keyPath){
+            window.console.log(key, keyPath);
+        }
+    }
+}
 </script>
+<style scoped>
+.el-menu-item.is-active {
+  background-color: #FCFCFC !important;
+}
+</style>
