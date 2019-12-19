@@ -86,7 +86,11 @@
                 </el-badge>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item icon="el-icon-plus" command="update">修改信息</el-dropdown-item>
-                  <el-dropdown-item icon="el-icon-circle-check" command="logout">退出登陆</el-dropdown-item>
+                  <el-dropdown-item
+                    icon="el-icon-circle-check"
+                    command="logout"
+                    click="logoutHandler"
+                  >退出登陆</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -153,6 +157,8 @@ export default {
 
     handleCommand(command) {
       this.$message("click on item " + command);
+      if (command === "logout") command = "login";
+      this.$router.push({ path: command });
     },
 
     handleTabsEdit() {},
@@ -253,6 +259,7 @@ export default {
 .el-menu-item.is-active {
   background-color: #fcfcfc !important;
   border: 1px solid teal;
+  border-right: none;
 }
 .left-nav__logo {
   color: teal;

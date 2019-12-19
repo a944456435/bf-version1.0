@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about page-component__scroll">
     <h1>This is an /home/first page</h1>
     <my-pie :pieData="pieData" :pieTitle="pieTitle" ref="mypie" />
   </div>
@@ -23,4 +23,5 @@ export default {
   }
 };
 </script>
+
 
