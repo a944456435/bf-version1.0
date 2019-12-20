@@ -1,10 +1,10 @@
 <template>
   <div id="category">
-    栏目管理 aaa: {{table.header[0].selection}}
-    <my-table :table="table">
-      <template #table="record">
-        <a class="el-icon-edit-outline" @click.prevent="editHandler(record.row)" /> &nbsp;
-        <a class="el-icon-edit-outline" @click.prevent="deletedHandler(record.id)" /> &nbsp;
+    栏目管理{{checkedList}}
+    <my-table :table="table" ref="table">
+      <template v-slot:table="record">
+        <a class="el-icon-delete" @click.prevent="editHandler(record)" /> &nbsp;
+        <a class="el-icon-edit-outline" @click.prevent="deletedHandler(record.row)" /> &nbsp;
       </template>
     </my-table>
   </div>
@@ -35,7 +35,7 @@ export default {
         ],
         header: [
           {
-            // selection: true,
+            prop: "selection",
             width: "50"
           },
           {
@@ -52,26 +52,35 @@ export default {
             prop: "address",
             label: "地址",
             width: "180"
-          }
-        ],
-        option: [
+          },
           {
-            width: "100"
+            prop: "option",
+            label: "操作",
+            width: "80"
           }
         ]
-      }
+      },
+      checkedList: []
     };
   },
   methods: {
-    editHandler() {},
-    deletedHandler(id) {
-      window.console.log(id, "==--");
+    editHandler(row) {
+      window.console.log(row);
+    },
+    deletedHandler(row) {
+      window.console.log(row, "==--");
     }
   },
   components: {
     "my-table": myTable
+  },
+  created() {
+    // var data = this.table.header;
+    // for (var i of data) {
+    //   window.console.log(i, "=");
+    // }
+    window.console.log(this.$refs, "=");
+    this.checkedList = this.$refs.checkedList;
   }
 };
 </script>
-<style>
-</style>

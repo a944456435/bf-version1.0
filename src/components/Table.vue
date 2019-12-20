@@ -1,43 +1,56 @@
 <template>
   <div>
-    <el-table :data="table.tableData" style="width: 100%">
+    {{ checkList }}
+    <el-table
+      ref="multipleTable"
+      :data="table.tableData"
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column
-        type="selection"
-        :width="table.header[0].width"
-        v-if="table.header[0].selection==true"
-      ></el-table-column>
-
-      <div v-for="item of table.header" :key="item.prop">
-        <el-table-column :prop="item.prop" :label="item.label" :width="item.width" align="center"></el-table-column>
-      </div>
-      <el-table-column v-if="table.option" label="操作" :width="table.option.width" align="center">
-        <!-- <slot name="table" :row="item"></slot> -->
-        <div v-for="item of table.header" :key="item.prop">
-          <slot name="table" :row="item"></slot>
-        </div>
+        v-for="(item, index) in table.header"
+        :key="index"
+        :prop="item.prop"
+        :width="item.width"
+        :label="item.label"
+        :type="item.prop === 'selection' ? 'selection' : undefined"
+      >
+        <template slot-scope="props">
+          <slot v-if="item.prop == 'option'" name="table" v-bind:record="props.row"></slot>
+          <span v-else-if="item.prop == 'selection'">
+            <el-checkbox-group v-model="checkList">
+              <el-checkbox :value="props.row.id" :label="props.row.id"></el-checkbox>
+            </el-checkbox-group>
+          </span>
+          <span v-else>{{ props.row[item.prop] }}</span>
+        </template>
       </el-table-column>
+
+      <!-- <el-table-column type="selection" :width="50"></el-table-column> -->
+      <!-- <div v-for="item in table.header" :key="item.prop">
+        <el-table-column :label="item.label" :width="item.eidth" v-if="item.prop == 'option'">
+          <slot name="table"></slot>
+        </el-table-column>
+        <el-table-column :prop="item.prop" :label="item.label" :width="item.width" v-else></el-table-column>
+      </div>-->
     </el-table>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      checkList: []
+    };
   },
   props: {
-    // table: { type: Object }
-    table: {
-      header: [
-        {
-          selection: {
-            default: true
-          }
-        }
-      ]
-    }
+    table: { type: Object }
   },
   methods: {
     handleSelectionChange() {}
+  },
+  mounted() {
+    window.console.log(this.table.header);
   }
 };
 </script>
